@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:rowCount="2"
+    android:columnCount="2"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.androidlabs.ListItemsActivity"
+    tools:showIn="@layout/activity_list_items">
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:gravity="fill"
+        android:layout_columnWeight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cliRadioButton" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:gravity="fill"
+        android:layout_columnWeight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cliCheckBox" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:gravity="fill"
+        android:layout_columnWeight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cliSwitchText" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:gravity="fill"
+        android:layout_columnWeight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
+</android.widget.GridLayout>

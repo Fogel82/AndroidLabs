@@ -3,4 +3,11 @@
     <string name="app_name">Labo Android</string>
     <string name="hello_message">Bonjour, tout le monde!</string>
     <string name="ButtonText">Je suis un bouton</string>
+    <string name="LoginText">Identifiant</string>
+    <string name="LoginHintText">Nom d\'usager</string>
+    <string name="PasswordText">Mot de passe</string>
+    <string name="PasswordHintText">Suggestion pour mot de passe</string>
+    <string name="cliRadioButton">Bouton Radio</string>
+    <string name="cliCheckBox">Texte pour case à cocher</string>
+    <string name="cliSwitchText">Texte pour bouton</string>
 </resources>
