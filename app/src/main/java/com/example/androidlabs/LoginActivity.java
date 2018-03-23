@@ -60,7 +60,9 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        sharedPref.getString(getString(R.string.default_email_key), getString(R.string.email_default_value));
+        String retrievedEmail = sharedPref.getString(getString(R.string.default_email_key), getString(R.string.email_default_value));
+        Log.i(ACTIVITY_NAME, "Got: "+retrievedEmail+" from SharedPreferences.");
+        loginEditText.setText(retrievedEmail);
     }
 
     @Override
@@ -92,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        Log.i(ACTIVITY_NAME, "Got email: "+loginEditText.getText().toString());
+        Log.i(ACTIVITY_NAME, "Writing email "+loginEditText.getText().toString()+" to SharedPreferences.");
 
         editor.putString(getString(R.string.default_email_key), loginEditText.getText().toString());
         editor.commit();
