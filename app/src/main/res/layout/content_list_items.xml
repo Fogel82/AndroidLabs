@@ -11,34 +11,35 @@
     tools:showIn="@layout/activity_list_items">
 
     <RadioButton
-        android:id="@+id/radioButton"
-        android:gravity="fill"
-        android:layout_columnWeight="1"
+        android:id="@+id/cliRadioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:gravity="fill"
         android:text="@string/cliRadioButton" />
 
     <CheckBox
-        android:id="@+id/checkBox"
-        android:gravity="fill"
-        android:layout_columnWeight="1"
+        android:id="@+id/cliCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:gravity="fill"
         android:text="@string/cliCheckBox" />
 
     <Switch
-        android:id="@+id/switch1"
-        android:gravity="fill"
-        android:layout_columnWeight="1"
+        android:id="@+id/cliSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:gravity="fill"
         android:text="@string/cliSwitchText" />
 
     <ImageButton
-        android:id="@+id/imageButton"
-        android:gravity="fill"
-        android:layout_columnWeight="1"
+        android:id="@+id/cliImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:gravity="fill"
+        android:onClick="handleImageButtonClick"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 </android.widget.GridLayout>
