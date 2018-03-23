@@ -13,6 +13,12 @@
     <string name="cliSwitchText">Switch Text</string>
     <string name="loginButtonText">Log In</string>
     <string name="imageButtonContentDescription">Image Button Content</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="message">Message</string>
+    <string name="cliCheckBoxDialogMessage">Finish the activity?</string>
+    <string name="cliCheckBoxClickedOkMessage">My information to share</string>
+    <string name="startReturnFromCliMessage">ListItemsActivity passed: </string>
 
     <string name="preference_file_key">com.example.androidlabs.preference_file_key</string>
     <string name="default_email_key">com.example.androidlabs.default_email_key</string>

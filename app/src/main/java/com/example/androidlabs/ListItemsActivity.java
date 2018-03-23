@@ -1,11 +1,14 @@
 package com.example.androidlabs;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -119,5 +122,30 @@ public class ListItemsActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(this , text, duration); //this is the ListActivity
         toast.show(); //display your message box
+    }
+
+    public void handleCheckBoxClick(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ListItemsActivity.this);
+
+        // 2. Chain together various setter methods to set the dialog characteristics
+        builder.setMessage(R.string.cliCheckBoxDialogMessage) //Add a dialog message to strings.xml
+
+                .setTitle(R.string.message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent resultIntent = new Intent(  );
+                        resultIntent.putExtra("Response", getString(R.string.cliCheckBoxClickedOkMessage));
+                        setResult(Activity.RESULT_OK, resultIntent);
+
+                        // finish the activity and return to the caller
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog; do nothing
+                    }
+                })
+                .show();
     }
 }

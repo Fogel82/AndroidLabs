@@ -12,6 +12,12 @@
     <string name="cliSwitchText">Texte pour bouton</string>
     <string name="loginButtonText">Se connecter</string>
     <string name="imageButtonContentDescription">Contenu du bouton d\'image</string>
+    <string name="ok">Valider</string>
+    <string name="cancel">Annuler</string>
+    <string name="message">Message</string>
+    <string name="cliCheckBoxDialogMessage">Complèter l\'activité?</string>
+    <string name="cliCheckBoxClickedOkMessage">Mon information à partager</string>
+    <string name="startReturnFromCliMessage">ListItemsActivity a passé: </string>
 
     <string name="cli_switch_on_text">Allumé</string>
     <string name="cli_switch_off_text">Étendu</string>
