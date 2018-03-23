@@ -10,13 +10,13 @@
     tools:showIn="@layout/activity_login">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/loginTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/LoginText" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/loginEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -24,16 +24,23 @@
         android:text="@string/LoginHintText" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/passwordTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/PasswordText" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
         android:text="" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loginButtonText"
+        android:onClick="sendLoginData"/>
 </android.widget.LinearLayout>

@@ -10,4 +10,5 @@
     <string name="cliRadioButton">Bouton Radio</string>
     <string name="cliCheckBox">Texte pour case à cocher</string>
     <string name="cliSwitchText">Texte pour bouton</string>
+    <string name="loginButtonText">Se connecter</string>
 </resources>
