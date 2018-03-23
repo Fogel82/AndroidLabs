@@ -10,7 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.Switch;
+import android.widget.Toast;
 
 public class ListItemsActivity extends AppCompatActivity {
 
@@ -18,7 +22,10 @@ public class ListItemsActivity extends AppCompatActivity {
 
     protected static final int REQUEST_IMAGE_CAPTURE = 1;
 
+    protected Switch cliSwitch;
     protected ImageButton cliImageButton;
+    protected CheckBox cliCheckBox;
+    protected RadioButton cliRadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +34,10 @@ public class ListItemsActivity extends AppCompatActivity {
         Log.i(ACTIVITY_NAME, "in onCreate(Bundle)");
 
         setContentView(R.layout.activity_list_items);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,7 +46,10 @@ public class ListItemsActivity extends AppCompatActivity {
             }
         });
 
-        cliImageButton = (ImageButton)findViewById(R.id.cliImageButton);
+        cliSwitch = findViewById(R.id.cliSwitch);
+        cliImageButton = findViewById(R.id.cliImageButton);
+        cliCheckBox = findViewById(R.id.cliCheckBox);
+        cliRadioButton = findViewById(R.id.cliRadioButton);
     }
 
     @Override
@@ -90,7 +100,24 @@ public class ListItemsActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            cliImageButton.setImageBitmap(imageBitmap);
+
+            if (imageBitmap != null) {
+                cliImageButton.setImageBitmap(imageBitmap);
+            }
+            else {
+                Log.w(ACTIVITY_NAME, "Got null imageBitmap from camera!");
+            }
+
         }
+    }
+
+    public void handleSwitchClick(View view) {
+        boolean isSwitchOn = cliSwitch.isChecked();
+
+        CharSequence text = (isSwitchOn ? getString(R.string.cli_switch_on_text) : getString(R.string.cli_switch_off_text));
+        int duration = (isSwitchOn ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
+
+        Toast toast = Toast.makeText(this , text, duration); //this is the ListActivity
+        toast.show(); //display your message box
     }
 }

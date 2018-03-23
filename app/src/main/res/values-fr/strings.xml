@@ -11,4 +11,8 @@
     <string name="cliCheckBox">Texte pour case à cocher</string>
     <string name="cliSwitchText">Texte pour bouton</string>
     <string name="loginButtonText">Se connecter</string>
+    <string name="imageButtonContentDescription">Contenu du bouton d\'image</string>
+
+    <string name="cli_switch_on_text">Allumé</string>
+    <string name="cli_switch_off_text">Étendu</string>
 </resources>
