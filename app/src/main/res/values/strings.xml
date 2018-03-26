@@ -2,6 +2,7 @@
     <string name="app_name">AndroidLabs</string>
     <string name="hello_message">Hello world!</string>
     <string name="ButtonText">I\'m a button</string>
+    <string name="startChatButtonText">Start Chat</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="LoginText">Login</string>
     <string name="LoginHintText">Login name</string>
@@ -26,5 +27,7 @@
 
     <string name="cli_switch_on_text">Switch is on</string>
     <string name="cli_switch_off_text">Switch is off</string>
+
+    <string name="chatSendButtonText">Send</string>
 
 </resources>

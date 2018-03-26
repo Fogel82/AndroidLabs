@@ -62,7 +62,7 @@ public class StartActivity extends AppCompatActivity {
 
     public void sendStartData(View view) {
 
-        // start StartActivity activity
+        // start ListItemsActivity activity
         Intent intent = new Intent(StartActivity.this, ListItemsActivity.class);
         startActivityForResult(intent, 5);
     }
@@ -89,5 +89,13 @@ public class StartActivity extends AppCompatActivity {
         else {
             Log.i(ACTIVITY_NAME, "Got requestCode: "+requestCode);
         }
+    }
+
+    public void handleStartChat(View view) {
+        Log.i(ACTIVITY_NAME, "Entered handleStartChat(View)");
+
+        // start StartActivity activity
+        Intent intent = new Intent(StartActivity.this, ChatWindowActivity.class);
+        startActivityForResult(intent, 82);
     }
 }
