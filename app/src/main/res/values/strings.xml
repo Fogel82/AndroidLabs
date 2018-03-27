@@ -3,6 +3,7 @@
     <string name="hello_message">Hello world!</string>
     <string name="ButtonText">I\'m a button</string>
     <string name="startChatButtonText">Start Chat</string>
+    <string name="startWeatherForecastButtonText">Weather</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="LoginText">Login</string>
     <string name="LoginHintText">Login name</string>

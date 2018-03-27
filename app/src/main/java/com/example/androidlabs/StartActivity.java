@@ -98,4 +98,12 @@ public class StartActivity extends AppCompatActivity {
         Intent intent = new Intent(StartActivity.this, ChatWindowActivity.class);
         startActivityForResult(intent, 82);
     }
+
+    public void handleStartWeatherForecast(View view) {
+        Log.i(ACTIVITY_NAME, "Entered handleStartWeatherForecast(View)");
+
+        // start StartActivity activity
+        Intent intent = new Intent(StartActivity.this, WeatherForecastActivity.class);
+        startActivityForResult(intent, 83);
+    }
 }
