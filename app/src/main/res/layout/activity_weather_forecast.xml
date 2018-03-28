@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text=""
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weatherImageView" />
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text=""
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weatherCurrentTempTextView" />
 
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text=""
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weatherMinTempTextView" />
 
@@ -58,4 +58,34 @@
         android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weatherMaxTempTextView" />
+
+    <TextView
+        android:id="@+id/weatherCurrentLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/weatherCurrentTempLabel"
+        app:layout_constraintStart_toEndOf="@+id/weatherCurrentTempTextView"
+        app:layout_constraintTop_toBottomOf="@+id/weatherImageView" />
+
+    <TextView
+        android:id="@+id/weatherMinLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/weatherMinTempLabel"
+        app:layout_constraintStart_toEndOf="@+id/weatherMinTempTextView"
+        app:layout_constraintTop_toBottomOf="@+id/weatherCurrentLabelTextView" />
+
+    <TextView
+        android:id="@+id/weatherMaxLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/weatherMaxTempLabel"
+        app:layout_constraintStart_toEndOf="@+id/weatherMaxTempTextView"
+        app:layout_constraintTop_toBottomOf="@+id/weatherMinLabelTextView" />
 </android.support.constraint.ConstraintLayout>

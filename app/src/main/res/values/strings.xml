@@ -31,4 +31,8 @@
 
     <string name="chatSendButtonText">Send</string>
 
+    <string name="weatherCurrentTempLabel">Current</string>
+    <string name="weatherMinTempLabel">Min</string>
+    <string name="weatherMaxTempLabel">Max</string>
+
 </resources>

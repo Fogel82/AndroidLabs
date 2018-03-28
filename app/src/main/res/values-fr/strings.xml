@@ -25,4 +25,8 @@
     <string name="cli_switch_off_text">Étendu</string>
 
     <string name="chatSendButtonText">Envoyer</string>
+
+    <string name="weatherCurrentTempLabel">Présent</string>
+    <string name="weatherMinTempLabel">Minimum</string>
+    <string name="weatherMaxTempLabel">Maximum</string>
 </resources>
