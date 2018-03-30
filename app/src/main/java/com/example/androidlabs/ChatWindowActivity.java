@@ -2,14 +2,18 @@ package com.example.androidlabs;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,10 +36,14 @@ public class ChatWindowActivity extends AppCompatActivity {
 
     protected SQLiteDatabase writableDb;
 
+    protected boolean isTabletView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_window);
+
+        isTabletView = (findViewById(R.id.chatWindowFrameLayout) != null);
 
         chatListView = findViewById(R.id.chatListView);
         chatEditText = findViewById(R.id.chatEditText);
@@ -49,6 +57,32 @@ public class ChatWindowActivity extends AppCompatActivity {
         chatAdapter = new ChatAdapter(this);
 
         chatListView.setAdapter(chatAdapter);
+
+        chatListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(ACTIVITY_NAME, "entered handleMessageListClick(parent, view, position: "+position+", id: "+id+")");
+
+                String selectedMessage = chatMessagesList.get(position);
+                Log.i(ACTIVITY_NAME, "selectedMessage: "+selectedMessage);
+
+                if (isTabletView) {
+                    // launch Fragment
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    MessageFragment fragment = new MessageFragment();
+                    fragmentTransaction.add(R.id.chatWindowFrameLayout, fragment);
+                    fragmentTransaction.commit();
+                }
+                else {
+                    Log.i(ACTIVITY_NAME, "Not in tablet view; launching MessageDetailsActivity");
+
+                    // start StartActivity activity
+                    Intent intent = new Intent(ChatWindowActivity.this, MessageDetailsActivity.class);
+                    startActivityForResult(intent, 84);
+                }
+            }
+        });
     }
 
     @Override
