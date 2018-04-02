@@ -24,6 +24,9 @@
 
     <string name="preference_file_key">com.example.androidlabs.preference_file_key</string>
     <string name="default_email_key">com.example.androidlabs.default_email_key</string>
+    <string name="chat_message_id_key">com.example.androidlabs.chat_message_id_key</string>
+    <string name="chat_message_details_key">com.example.androidlabs.chat_message_details_key</string>
+    <string name="chat_message_to_delete_key">com.example.androidlabs.chat_message_to_delete_key</string>
     <string name="email_default_value">email@domain.com</string>
 
     <string name="cli_switch_on_text">Switch is on</string>
@@ -35,7 +38,6 @@
     <string name="weatherMinTempLabel">Min</string>
     <string name="weatherMaxTempLabel">Max</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="deleteThisMessage">Delete This Message</string>
 
 </resources>

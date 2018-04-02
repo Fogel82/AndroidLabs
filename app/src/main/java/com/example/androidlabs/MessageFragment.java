@@ -1,12 +1,17 @@
 package com.example.androidlabs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -18,13 +23,21 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class MessageFragment extends Fragment {
+    private static final String FRAGMENT_TYPE = "MessageFragment";
+
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_CHAT_MESSAGE_STRING = "chat_message_string";
     private static final String ARG_CHAT_MESSAGE_ID = "chat_message_id";
 
+    public static final int DELETE_MESSAGE_RETURN_CODE = 8899;
+
     private String messageString;
     private String messageId;
+
+    private TextView messageFragmentMessageTextView;
+    private TextView messageFragmentIdTextView;
+    private Button messageFragmentDeleteButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -52,6 +65,7 @@ public class MessageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             messageString = getArguments().getString(ARG_CHAT_MESSAGE_STRING);
             messageId = getArguments().getString(ARG_CHAT_MESSAGE_ID);
@@ -63,6 +77,47 @@ public class MessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_message, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        // init GUI objects...I hope
+        messageFragmentMessageTextView = view.findViewById(R.id.messageFragmentMessageTextView);
+        messageFragmentIdTextView = view.findViewById(R.id.messageFragmentIdTextView);
+        messageFragmentDeleteButton = view.findViewById(R.id.messageFragmentDeleteButton);
+
+        if (messageFragmentMessageTextView != null) {
+            Log.i(FRAGMENT_TYPE, "Setting messageFragmentMessageTextView text to: "+messageString);
+            messageFragmentMessageTextView.setText(messageString);
+        }
+        else {
+            Log.e(FRAGMENT_TYPE, "Got null messageFragmentMessageTextView");
+        }
+
+        if (messageFragmentIdTextView != null) {
+            Log.i(FRAGMENT_TYPE, "Setting messageFragmentIdTextView text to: "+messageId);
+            messageFragmentIdTextView.setText(messageId);
+        }
+        else {
+            Log.e(FRAGMENT_TYPE, "Got null messageFragmentIdTextView");
+        }
+
+        if (messageFragmentDeleteButton != null) {
+            messageFragmentDeleteButton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.i(FRAGMENT_TYPE, "You clicked the delete button!");
+                            Intent intent = new Intent();
+                            intent.putExtra(getString(R.string.chat_message_to_delete_key), messageId);
+                            getActivity().setResult(DELETE_MESSAGE_RETURN_CODE, intent);
+                        }
+                    }
+            );
+        }
+        else {
+            Log.e(FRAGMENT_TYPE, "Got null messageFragmentDeleteButton");
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

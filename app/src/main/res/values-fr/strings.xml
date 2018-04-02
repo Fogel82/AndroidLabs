@@ -29,4 +29,6 @@
     <string name="weatherCurrentTempLabel">Présent</string>
     <string name="weatherMinTempLabel">Minimum</string>
     <string name="weatherMaxTempLabel">Maximum</string>
+
+    <string name="deleteThisMessage">Effacer ce message</string>
 </resources>

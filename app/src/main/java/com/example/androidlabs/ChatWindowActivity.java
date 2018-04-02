@@ -3,6 +3,7 @@ package com.example.androidlabs;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 public class ChatWindowActivity extends AppCompatActivity {
 
     protected static final String ACTIVITY_NAME = "ChatWindowActivity";
+
+    private static final int MESSAGE_DETAILS_START_CODE = 84;
 
     protected ListView chatListView;
     protected EditText chatEditText;
@@ -70,16 +73,28 @@ public class ChatWindowActivity extends AppCompatActivity {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                    MessageFragment fragment = new MessageFragment();
+                    MessageFragment fragment = MessageFragment.newInstance(selectedMessage, String.valueOf(id));
                     fragmentTransaction.add(R.id.chatWindowFrameLayout, fragment);
                     fragmentTransaction.commit();
                 }
                 else {
                     Log.i(ACTIVITY_NAME, "Not in tablet view; launching MessageDetailsActivity");
 
-                    // start StartActivity activity
+                    // Write message details to SharedPreferences for activity to use.
+                    Context context = getApplicationContext();
+                    SharedPreferences sharedPref = context.getSharedPreferences(
+                            getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+
+                    Log.i(ACTIVITY_NAME, "Writing item info to SharedPreferences. selectedMessage: "+selectedMessage+" id: "+id+".");
+
+                    editor.putLong(getString(R.string.chat_message_id_key), id);
+                    editor.putString(getString(R.string.chat_message_details_key), selectedMessage);
+                    editor.commit();
+
+                    // start MessageDetailsActivity activity
                     Intent intent = new Intent(ChatWindowActivity.this, MessageDetailsActivity.class);
-                    startActivityForResult(intent, 84);
+                    startActivityForResult(intent, MESSAGE_DETAILS_START_CODE);
                 }
             }
         });
@@ -90,6 +105,23 @@ public class ChatWindowActivity extends AppCompatActivity {
         super.onDestroy();
 
         writableDb.close();
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        if (requestCode == MESSAGE_DETAILS_START_CODE) {
+            if (resultCode == MessageFragment.DELETE_MESSAGE_RETURN_CODE) {
+                String idToDelete = data.getStringExtra(getString(R.string.chat_message_to_delete_key));
+
+                Log.i(ACTIVITY_NAME, "Got message id: "+idToDelete+" for deletion.");
+            }
+            else {
+                Log.i(ACTIVITY_NAME, "Got MessageDetails start code, but got result code: "+resultCode+"; doing nothing.");
+            }
+        }
+        else {
+            Log.i(ACTIVITY_NAME, "Got request code: "+requestCode+"; doing nothing.");
+        }
     }
 
     private void loadMessagesFromDatabase() {
