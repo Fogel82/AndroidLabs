@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ChatWindowActivity extends AppCompatActivity {
+public class ChatWindowActivity extends AppCompatActivity implements MessageFragment.OnMessageFragmentInteractionListener {
 
     protected static final String ACTIVITY_NAME = "ChatWindowActivity";
 
@@ -88,9 +88,11 @@ public class ChatWindowActivity extends AppCompatActivity {
 
                     Log.i(ACTIVITY_NAME, "Writing item info to SharedPreferences. selectedMessage: "+selectedMessage+" id: "+id+".");
 
+                    // TODO: this ID is wrong. Need a method to query the DB for the string and return the DB ID here.
+
                     editor.putLong(getString(R.string.chat_message_id_key), id);
                     editor.putString(getString(R.string.chat_message_details_key), selectedMessage);
-                    editor.commit();
+                    editor.apply();
 
                     // start MessageDetailsActivity activity
                     Intent intent = new Intent(ChatWindowActivity.this, MessageDetailsActivity.class);
@@ -107,13 +109,21 @@ public class ChatWindowActivity extends AppCompatActivity {
         writableDb.close();
     }
 
+    public void onDeleteMessageButtonClicked(String messageToDelete) {
+        // from fragment?
+        Log.i(ACTIVITY_NAME, "Entered onDeleteMessageButtonClicked("+messageToDelete+")");
+        deleteMessageFromDatabase(messageToDelete);
+    }
+
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        // from MessageDetailsActivity?
         if (requestCode == MESSAGE_DETAILS_START_CODE) {
             if (resultCode == MessageFragment.DELETE_MESSAGE_RETURN_CODE) {
                 String idToDelete = data.getStringExtra(getString(R.string.chat_message_to_delete_key));
 
                 Log.i(ACTIVITY_NAME, "Got message id: "+idToDelete+" for deletion.");
+                deleteMessageFromDatabase(idToDelete);
             }
             else {
                 Log.i(ACTIVITY_NAME, "Got MessageDetails start code, but got result code: "+resultCode+"; doing nothing.");
@@ -121,6 +131,49 @@ public class ChatWindowActivity extends AppCompatActivity {
         }
         else {
             Log.i(ACTIVITY_NAME, "Got request code: "+requestCode+"; doing nothing.");
+        }
+    }
+
+    private void deleteMessageFromDatabase(String messageId) {
+        Log.i(ACTIVITY_NAME, "Entered deleteMessageFromDatabase("+messageId+")");
+        ChatDatabaseHelper dbHelper = new ChatDatabaseHelper(this);
+
+        writableDb = dbHelper.getWritableDatabase();
+
+        Cursor c = null;
+        try {
+            c = writableDb.rawQuery("select * from "+ChatDatabaseHelper.TABLE_NAME+" where "+ChatDatabaseHelper.KEY_ID+" = ?", new String[] { messageId });
+
+            Log.i(ACTIVITY_NAME, "Cursor’s column count = " + c.getColumnCount() );
+
+            for (int i=0; i<c.getColumnCount(); i++) {
+                Log.i(ACTIVITY_NAME, "Column "+i+": "+c.getColumnName(i));
+            }
+
+            while(c.moveToNext() ) {
+                String retrievedId = c.getString( 0 );
+                String retrievedChatMessage = c.getString(1);
+                Log.i(ACTIVITY_NAME, "ID:" + retrievedId + " Message: "+retrievedChatMessage );
+
+                if (retrievedId == null || !retrievedId.equals(messageId)) {
+                    Log.e(ACTIVITY_NAME, "Got bad ID from SQL: "+retrievedId);
+                }
+                else {
+                    // TODO: sql delete
+                    chatMessagesList.remove(retrievedChatMessage);
+                    chatAdapter.notifyDataSetChanged();
+                }
+            }
+
+        }
+        catch (Exception e) {
+            Log.e(ACTIVITY_NAME, "Got exception", e);
+        }
+        finally {
+            if (c != null) {
+                c.close();
+            }
+
         }
     }
 

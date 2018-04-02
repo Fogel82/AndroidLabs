@@ -1,6 +1,7 @@
 package com.example.androidlabs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
 
-public class MessageDetailsActivity extends AppCompatActivity implements MessageFragment.OnFragmentInteractionListener {
+import static com.example.androidlabs.MessageFragment.DELETE_MESSAGE_RETURN_CODE;
+
+public class MessageDetailsActivity extends AppCompatActivity implements MessageFragment.OnMessageFragmentInteractionListener {
 
     protected static String ACTIVITY_NAME = "MessageDetailsActivity";
 
@@ -38,8 +41,13 @@ public class MessageDetailsActivity extends AppCompatActivity implements Message
         }
     }
 
-    public void onFragmentInteraction(Uri uri) {
-        // nothing; just trying to shut up Android Studio
+    public void onDeleteMessageButtonClicked(String messageToDelete) {
+        Log.i(ACTIVITY_NAME, "Got message to delete id: "+messageToDelete);
+
+        Intent intent = new Intent();
+        intent.putExtra(getString(R.string.chat_message_to_delete_key), messageId);
+        setResult(MessageFragment.DELETE_MESSAGE_RETURN_CODE, intent);
+        finish();
     }
 
     private boolean getMessageDetailsFromSharedPreferences() {

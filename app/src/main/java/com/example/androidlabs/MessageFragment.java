@@ -17,7 +17,7 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MessageFragment.OnFragmentInteractionListener} interface
+ * {@link OnMessageFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link MessageFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -39,7 +39,7 @@ public class MessageFragment extends Fragment {
     private TextView messageFragmentIdTextView;
     private Button messageFragmentDeleteButton;
 
-    private OnFragmentInteractionListener mListener;
+    private OnMessageFragmentInteractionListener mListener;
 
     public MessageFragment() {
         // Required empty public constructor
@@ -108,9 +108,10 @@ public class MessageFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             Log.i(FRAGMENT_TYPE, "You clicked the delete button!");
-                            Intent intent = new Intent();
-                            intent.putExtra(getString(R.string.chat_message_to_delete_key), messageId);
-                            getActivity().setResult(DELETE_MESSAGE_RETURN_CODE, intent);
+                            onButtonPressed(messageId);
+//                            Intent intent = new Intent();
+//                            intent.putExtra(getString(R.string.chat_message_to_delete_key), messageId);
+//                            getActivity().setResult(DELETE_MESSAGE_RETURN_CODE, intent);
                         }
                     }
             );
@@ -120,21 +121,21 @@ public class MessageFragment extends Fragment {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(String messageToDelete) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            Log.i(FRAGMENT_TYPE, "mListener not null. Calling onDeleteMessageButtonClicked("+messageToDelete+")");
+            mListener.onDeleteMessageButtonClicked(messageToDelete);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnMessageFragmentInteractionListener) {
+            mListener = (OnMessageFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnMessageFragmentInteractionListener");
         }
     }
 
@@ -154,8 +155,7 @@ public class MessageFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnMessageFragmentInteractionListener {
+        void onDeleteMessageButtonClicked(String messageToDelete);
     }
 }
