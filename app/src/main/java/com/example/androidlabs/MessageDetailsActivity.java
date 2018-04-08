@@ -3,14 +3,11 @@ package com.example.androidlabs;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
-
-import static com.example.androidlabs.MessageFragment.DELETE_MESSAGE_RETURN_CODE;
 
 public class MessageDetailsActivity extends AppCompatActivity implements MessageFragment.OnMessageFragmentInteractionListener {
 
@@ -55,10 +52,10 @@ public class MessageDetailsActivity extends AppCompatActivity implements Message
         SharedPreferences sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
-        long id = sharedPref.getLong(getString(R.string.chat_message_id_key), -1);
+        messageId = sharedPref.getString(getString(R.string.chat_message_id_key), "");
         messageString = sharedPref.getString(getString(R.string.chat_message_details_key), "");
 
-        if (id == -1) {
+        if (messageId.isEmpty()) {
             Log.e(ACTIVITY_NAME, "Did not load message ID from SharedPreferences!");
             return false;
         }
@@ -67,8 +64,6 @@ public class MessageDetailsActivity extends AppCompatActivity implements Message
             Log.e(ACTIVITY_NAME, "Did not load message text from SharedPreferences!");
             return false;
         }
-
-        messageId = String.valueOf(id);
 
         return true;
     }

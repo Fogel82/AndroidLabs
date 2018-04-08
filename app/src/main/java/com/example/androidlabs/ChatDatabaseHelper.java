@@ -7,15 +7,25 @@ import android.util.Log;
 
 public class ChatDatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int VERSION_NUM = 1;
-    public static final String ACTIVITY_NAME = "ChatDatabaseHelper";
-    public static final String DATABASE_NAME = "MeepMeep";
+    private static final int VERSION_NUM = 1;
+    private static final String ACTIVITY_NAME = "ChatDatabaseHelper";
+    private static final String DATABASE_NAME = "MeepMeep";
     public static final String TABLE_NAME = "ChatMessageTable";
 
     public static final String KEY_ID = "ID";
     public static final String KEY_MESSAGE = "MESSAGE";
 
-    public ChatDatabaseHelper(Context ctx) {
+    private static ChatDatabaseHelper instance = null;
+
+    public static ChatDatabaseHelper getInstance(Context ctx) {
+        if (instance == null) {
+            instance = new ChatDatabaseHelper(ctx);
+        }
+
+        return instance;
+    }
+
+    private ChatDatabaseHelper(Context ctx) {
         super(ctx, DATABASE_NAME, null, VERSION_NUM);
     }
 

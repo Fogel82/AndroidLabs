@@ -33,6 +33,7 @@
     <string name="cli_switch_off_text">Switch is off</string>
 
     <string name="chatSendButtonText">Send</string>
+    <string name="chatHintText">Enter a chat message</string>
 
     <string name="weatherCurrentTempLabel">Current</string>
     <string name="weatherMinTempLabel">Min</string>

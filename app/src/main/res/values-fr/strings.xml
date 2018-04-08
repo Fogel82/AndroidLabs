@@ -25,6 +25,7 @@
     <string name="cli_switch_off_text">Étendu</string>
 
     <string name="chatSendButtonText">Envoyer</string>
+    <string name="chatHintText">Envoyer un message pour bavarder</string>
 
     <string name="weatherCurrentTempLabel">Présent</string>
     <string name="weatherMinTempLabel">Minimum</string>

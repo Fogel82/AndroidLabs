@@ -109,9 +109,6 @@ public class MessageFragment extends Fragment {
                         public void onClick(View view) {
                             Log.i(FRAGMENT_TYPE, "You clicked the delete button!");
                             onButtonPressed(messageId);
-//                            Intent intent = new Intent();
-//                            intent.putExtra(getString(R.string.chat_message_to_delete_key), messageId);
-//                            getActivity().setResult(DELETE_MESSAGE_RETURN_CODE, intent);
                         }
                     }
             );

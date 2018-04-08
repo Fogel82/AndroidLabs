@@ -68,13 +68,23 @@ public class ChatWindowActivity extends AppCompatActivity implements MessageFrag
                 String selectedMessage = chatMessagesList.get(position);
                 Log.i(ACTIVITY_NAME, "selectedMessage: "+selectedMessage);
 
+                String realId = getIdForMessage(selectedMessage);
+
+                if(realId == null) {
+                    // something went wrong and an errors should have shown in the log/screen
+                    // bail out!
+                    return;
+                }
+
+                Log.i(ACTIVITY_NAME, "Using actual database ID "+realId+" for delete.");
+
                 if (isTabletView) {
                     // launch Fragment
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                    MessageFragment fragment = MessageFragment.newInstance(selectedMessage, String.valueOf(id));
-                    fragmentTransaction.add(R.id.chatWindowFrameLayout, fragment);
+                    MessageFragment fragment = MessageFragment.newInstance(selectedMessage, realId);
+                    fragmentTransaction.replace(R.id.chatWindowFrameLayout, fragment);
                     fragmentTransaction.commit();
                 }
                 else {
@@ -88,9 +98,9 @@ public class ChatWindowActivity extends AppCompatActivity implements MessageFrag
 
                     Log.i(ACTIVITY_NAME, "Writing item info to SharedPreferences. selectedMessage: "+selectedMessage+" id: "+id+".");
 
-                    // TODO: this ID is wrong. Need a method to query the DB for the string and return the DB ID here.
 
-                    editor.putLong(getString(R.string.chat_message_id_key), id);
+
+                    editor.putString(getString(R.string.chat_message_id_key), realId);
                     editor.putString(getString(R.string.chat_message_details_key), selectedMessage);
                     editor.apply();
 
@@ -111,7 +121,7 @@ public class ChatWindowActivity extends AppCompatActivity implements MessageFrag
 
     public void onDeleteMessageButtonClicked(String messageToDelete) {
         // from fragment?
-        Log.i(ACTIVITY_NAME, "Entered onDeleteMessageButtonClicked("+messageToDelete+")");
+        Log.i(ACTIVITY_NAME, "Entered onDeleteMessageButtonClicked("+messageToDelete+") FROM FRAGMENT!");
         deleteMessageFromDatabase(messageToDelete);
     }
 
@@ -134,9 +144,59 @@ public class ChatWindowActivity extends AppCompatActivity implements MessageFrag
         }
     }
 
+    private String getIdForMessage(String messageText) {
+        Log.i(ACTIVITY_NAME, "Entered getIdForMessage("+messageText+")");
+        ChatDatabaseHelper dbHelper = ChatDatabaseHelper.getInstance(this);
+
+        writableDb = dbHelper.getWritableDatabase();
+
+        Cursor c = null;
+        try {
+            c = writableDb.rawQuery("select * from "+ChatDatabaseHelper.TABLE_NAME+" where "+ChatDatabaseHelper.KEY_MESSAGE+" = ?", new String[] { messageText });
+
+            Log.i(ACTIVITY_NAME, "Cursor’s column count = " + c.getColumnCount() );
+
+            for (int i=0; i<c.getColumnCount(); i++) {
+                Log.i(ACTIVITY_NAME, "Column "+i+": "+c.getColumnName(i));
+            }
+
+            String realId = null;
+
+            while(c.moveToNext() ) {
+                String retrievedId = c.getString( 0 );
+                String retrievedChatMessage = c.getString(1);
+                Log.i(ACTIVITY_NAME, "ID:" + retrievedId + " Message: "+retrievedChatMessage );
+
+                if (retrievedChatMessage == null || !retrievedChatMessage.equals(messageText)) {
+                    Log.e(ACTIVITY_NAME, "Got bad message from SQL: "+retrievedChatMessage);
+                }
+                else if (retrievedId == null) {
+                    Log.e(ACTIVITY_NAME, "Got null from SQL");
+                }
+                else {
+                    realId = retrievedId;
+                    Log.i(ACTIVITY_NAME, "Returning ID: "+realId);
+                    break;
+                }
+            }
+
+            return realId;
+        }
+        catch (Exception e) {
+            Log.e(ACTIVITY_NAME, "Got exception", e);
+        }
+        finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+
+        return null;
+    }
+
     private void deleteMessageFromDatabase(String messageId) {
         Log.i(ACTIVITY_NAME, "Entered deleteMessageFromDatabase("+messageId+")");
-        ChatDatabaseHelper dbHelper = new ChatDatabaseHelper(this);
+        ChatDatabaseHelper dbHelper = ChatDatabaseHelper.getInstance(this);
 
         writableDb = dbHelper.getWritableDatabase();
 
@@ -159,7 +219,7 @@ public class ChatWindowActivity extends AppCompatActivity implements MessageFrag
                     Log.e(ACTIVITY_NAME, "Got bad ID from SQL: "+retrievedId);
                 }
                 else {
-                    // TODO: sql delete
+                    writableDb.delete(ChatDatabaseHelper.TABLE_NAME, ChatDatabaseHelper.KEY_ID+"=?", new String[]{messageId});
                     chatMessagesList.remove(retrievedChatMessage);
                     chatAdapter.notifyDataSetChanged();
                 }
@@ -178,7 +238,7 @@ public class ChatWindowActivity extends AppCompatActivity implements MessageFrag
     }
 
     private void loadMessagesFromDatabase() {
-        ChatDatabaseHelper dbHelper = new ChatDatabaseHelper(this);
+        ChatDatabaseHelper dbHelper = ChatDatabaseHelper.getInstance(this);
 
         writableDb = dbHelper.getWritableDatabase();
 
