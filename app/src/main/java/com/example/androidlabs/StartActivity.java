@@ -67,6 +67,12 @@ public class StartActivity extends AppCompatActivity {
         startActivityForResult(intent, 5);
     }
 
+    public void startToolbar(View view) {
+        // start TestToolbarActivity activity
+        Intent intent = new Intent(StartActivity.this, TestToolbarActivity.class);
+        startActivityForResult(intent, 6);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         if (requestCode == 5) {

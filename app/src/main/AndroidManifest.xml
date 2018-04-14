@@ -34,7 +34,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ChatWindowActivity" />
         <activity android:name=".WeatherForecastActivity" />
-        <activity android:name=".MessageDetailsActivity"></activity>
+        <activity android:name=".MessageDetailsActivity" />
+        <activity
+            android:name=".TestToolbarActivity"
+            android:label="@string/title_activity_test_toolbar"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

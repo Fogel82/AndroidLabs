@@ -40,5 +40,9 @@
     <string name="weatherMaxTempLabel">Max</string>
 
     <string name="deleteThisMessage">Delete This Message</string>
+    <string name="title_activity_test_toolbar">TestToolbarActivity</string>
+
+    <string name="toolbarButtonText">Toolbar</string>
+    <string name="about_toast_text">Version 1.0, by Fogel</string>
 
 </resources>
