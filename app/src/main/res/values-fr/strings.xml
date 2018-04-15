@@ -35,4 +35,6 @@
 
     <string name="toolbarButtonText">Barre d\'outils</string>
     <string name="about_toast_text">Version 1.0, par Fogel</string>
+    <string name="dialog_fire_missiles">Confirmation pour activation de missile</string>
+    <string name="fire">Tirer!</string>
 </resources>
