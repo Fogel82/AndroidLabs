@@ -46,5 +46,6 @@
     <string name="about_toast_text">Version 1.0, by Fogel</string>
     <string name="dialog_fire_missiles">Missile Control Confirmation</string>
     <string name="fire">Fire!</string>
+    <string name="newMessageText">New Message</string>
 
 </resources>
